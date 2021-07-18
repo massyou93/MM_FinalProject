@@ -6,17 +6,21 @@ using UnityEngine.Windows.Speech;
 
 public class Voice : MonoBehaviour
 {
+   
+    
     private KeywordRecognizer keywordRecognizer;
     private Dictionary<string, System.Action> actions = new Dictionary<string, System.Action>();
     // Start is called before the first frame update
     void Start()
     {
-        //actions.Add("jump",Jump);
+        actions.Add("jump",Jump);
+        actions.Add("move", Move);
         
 
-       keywordRecognizer = new KeywordRecognizer(actions.Keys.ToArray());
+
+        keywordRecognizer = new KeywordRecognizer(actions.Keys.ToArray());
        keywordRecognizer.OnPhraseRecognized += RecognizedSpeech;
-       keywordRecognizer.Start();
+        keywordRecognizer.Start();
     }
 
     private void RecognizedSpeech(PhraseRecognizedEventArgs speech)
@@ -30,4 +34,16 @@ public class Voice : MonoBehaviour
         GetComponent<Rigidbody2D>().AddForce(Vector2.up * 1250);
 
     }
+
+   
+
+    private void Move()
+    {
+        GetComponent<Rigidbody2D>().AddForce(Vector2.right * 125000);
+       
+
+    }
+
+
+    
 }
